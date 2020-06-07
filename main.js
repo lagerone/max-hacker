@@ -133,7 +133,7 @@ class Overlay {
 
 const hackingAlert = new Overlay(
   document.getElementById('alert'),
-  './sounds/alarm.wav',
+  './sounds/alarm.mp3',
   2000,
   () => {
     productOverlay.open();
@@ -142,10 +142,10 @@ const hackingAlert = new Overlay(
 
 const productOverlay = new Overlay(
   document.getElementById('product-overlay'),
-  './sounds/robot-transmission.ogg',
+  './sounds/robot-transmission.mp3',
   null,
   null,
-  './sounds/spaceship-interface.wav',
+  './sounds/spaceship-interface.mp3',
   1000
 );
 
@@ -154,19 +154,19 @@ const productHackerOverlay = new Overlay(
   null,
   null,
   null,
-  './sounds/lushlife-levelup.wav',
+  './sounds/lushlife-levelup.mp3',
   1000
 );
 
 function preLoadAudioFiles(doneCallback) {
   const audioFiles = [
-    './sounds/robot-transmission.ogg',
-    './sounds/spaceship-interface.wav',
-    './sounds/alarm.wav',
-    './sounds/ambient-bg.wav',
-    './sounds/lushlife-levelup.wav',
-    './sounds/powerup.flac',
-    './sounds/police.wav',
+    './sounds/robot-transmission.mp3',
+    './sounds/spaceship-interface.mp3',
+    './sounds/alarm.mp3',
+    './sounds/ambient-bg.mp3',
+    './sounds/lushlife-levelup.mp3',
+    './sounds/powerup.mp3',
+    './sounds/police.mp3',
   ];
 
   function preloadAudio(url) {
@@ -201,7 +201,7 @@ preLoadAudioFiles(() => {
 
 function startProgram() {
   document.getElementById('hacker-program').classList.remove('hidden');
-  const bgAudio = new Audio('./sounds/ambient-bg.wav');
+  const bgAudio = new Audio('./sounds/ambient-bg.mp3');
   bgAudio.loop = true;
   bgAudio.play();
 
@@ -282,10 +282,10 @@ function createGameOverOverlay(overlayText) {
   document.getElementById('hacker-program').appendChild(element);
   return new Overlay(
     element,
-    './sounds/powerup.flac',
+    './sounds/powerup.mp3',
     null,
     null,
-    './sounds/spaceship-interface.wav',
+    './sounds/spaceship-interface.mp3',
     1000
   );
 }
@@ -305,7 +305,7 @@ function createGameReallyOverOverlay(overlayText) {
       ${overlayText}
     </div>`;
   document.getElementById('hacker-program').appendChild(element);
-  return new Overlay(element, './sounds/police.wav', null, null, null, 1000);
+  return new Overlay(element, './sounds/police.mp3', null, null, null, 1000);
 }
 
 function productIsHacked() {
