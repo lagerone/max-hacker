@@ -262,7 +262,8 @@ function createGameOverOverlay() {
   const element = document.createElement('div');
   element.classList.add('alert', 'overlay', 'game-over-overlay', 'hidden');
   element.style.top = randomIntFromInterval(10, 500) + 'px';
-  element.style.left = randomIntFromInterval(10, 300) + 'px';
+  element.style.left =
+    randomIntFromInterval(10, Math.round(window.innerWidth) - 500) + 'px';
   element.innerHTML = `<div class="overlay-close">x</div>
     <div class="overlay-container">
       Du har lyckats hacka sidan! Lamborghini är köpt för 0 kr.
