@@ -29,7 +29,7 @@ class TerminalText {
 
   /**
    * @param {HTMLElement} textElement
-   * @param {string} textElement
+   * @param {string} text
    * @param {Cursor} cursor
    */
   constructor(textElement, text, cursor) {
@@ -229,7 +229,6 @@ const productTerminalText = new TerminalText(
   window.kernel,
   productCursor
 );
-productCursor.start();
 
 let gameOverCount = 0;
 document.querySelector('.buy-button').addEventListener('click', () => {
