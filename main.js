@@ -76,9 +76,9 @@ class Overlay {
     this.audioClose = soundClose && new Audio(soundClose);
     this.closeTimeout = closeTimeout;
 
-    this.element
-      .querySelector('.overlay-close')
-      .addEventListener('click', () => {
+    const closeElement = this.element.querySelector('.overlay-close');
+    if (closeElement)
+      closeElement.addEventListener('click', () => {
         this.close();
       });
   }
@@ -166,6 +166,7 @@ function preLoadAudioFiles(doneCallback) {
     './sounds/ambient-bg.wav',
     './sounds/lushlife-levelup.wav',
     './sounds/powerup.flac',
+    './sounds/police.wav',
   ];
 
   function preloadAudio(url) {
@@ -232,9 +233,19 @@ const productTerminalText = new TerminalText(
 );
 productCursor.start();
 
+let gameOverCount = 0;
 document.querySelector('.buy-button').addEventListener('click', () => {
   if (document.querySelector('.buy-button').classList.contains('hacked')) {
-    createGameOverOverlay().open();
+    gameOverCount++;
+    if (gameOverCount < 10) {
+      createGameOverOverlay(
+        'Du har lyckats hacka sidan! Lamborghini är köpt för 0 kr.'
+      ).open();
+    } else {
+      createGameReallyOverOverlay(
+        'Du har hackat för mycket! Polisen kommer.'
+      ).open();
+    }
     return;
   }
   productHackerOverlay.open();
@@ -258,7 +269,7 @@ document.getElementById('secret-button').addEventListener('click', () => {
   hackingAlert.open();
 });
 
-function createGameOverOverlay() {
+function createGameOverOverlay(overlayText) {
   const element = document.createElement('div');
   element.classList.add('alert', 'overlay', 'game-over-overlay', 'hidden');
   element.style.top = randomIntFromInterval(10, 500) + 'px';
@@ -266,7 +277,7 @@ function createGameOverOverlay() {
     randomIntFromInterval(10, Math.round(window.innerWidth) - 500) + 'px';
   element.innerHTML = `<div class="overlay-close">x</div>
     <div class="overlay-container">
-      Du har lyckats hacka sidan! Lamborghini är köpt för 0 kr.
+      ${overlayText}
     </div>`;
   document.getElementById('hacker-program').appendChild(element);
   return new Overlay(
@@ -277,6 +288,24 @@ function createGameOverOverlay() {
     './sounds/spaceship-interface.wav',
     1000
   );
+}
+
+function createGameReallyOverOverlay(overlayText) {
+  const element = document.createElement('div');
+  element.classList.add(
+    'alert',
+    'overlay',
+    'game-really-over-overlay',
+    'hidden'
+  );
+  element.style.top = randomIntFromInterval(10, 500) + 'px';
+  element.style.left =
+    randomIntFromInterval(10, Math.round(window.innerWidth) - 700) + 'px';
+  element.innerHTML = `<div class="overlay-container">
+      ${overlayText}
+    </div>`;
+  document.getElementById('hacker-program').appendChild(element);
+  return new Overlay(element, './sounds/police.wav', null, null, null, 1000);
 }
 
 function productIsHacked() {

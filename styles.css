@@ -23,6 +23,11 @@ body {
   width: 500px;
 }
 
+.game-really-over-overlay {
+  background-color: red;
+  width: 700px;
+}
+
 #product-console-overlay {
   top: 100px;
   left: 30px;
