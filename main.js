@@ -23,20 +23,19 @@ class Cursor {
 }
 
 class TerminalText {
+  typeSpeed = 2;
+  typeCount = 0;
+  typeTimeoutMS = 500;
+
   /**
    * @param {HTMLElement} textElement
    * @param {string} textElement
-   * @param {number} typeSpeed
+   * @param {Cursor} cursor
    */
-  constructor(textElement, text, typeSpeed = 2, startCount = 0) {
+  constructor(textElement, text, cursor) {
     this.textElement = textElement;
     this.text = text;
-    this.typeSpeed = typeSpeed;
-    this.typeCount = startCount;
-
-    if (this.typeCount > 0) {
-      this.typeText();
-    }
+    this.cursor = cursor;
   }
 
   typeText() {
@@ -49,6 +48,15 @@ class TerminalText {
     this.typeCount = 0;
     this.textElement.innerText = '';
   }
+
+  keypressEventListener = () => {
+    this.cursor.stop();
+    clearTimeout(this.cursorTimeoutId);
+    this.typeText();
+    this.cursorTimeoutId = setTimeout(() => {
+      this.cursor.start();
+    }, this.typeTimeoutMS);
+  };
 }
 
 class Overlay {
@@ -199,37 +207,26 @@ preLoadAudioFiles(() => {
   }, 2000);
 });
 
+const cursor = new Cursor(document.querySelector('.main-cursor'));
+const terminalText = new TerminalText(
+  document.querySelector('.main-console'),
+  window.kernel,
+  cursor
+);
+window.addEventListener('keypress', terminalText.keypressEventListener);
+
 function startProgram() {
   document.getElementById('hacker-program').classList.remove('hidden');
   const bgAudio = new Audio('./sounds/ambient-bg.mp3');
   bgAudio.loop = true;
   bgAudio.play();
-
-  const cursor = new Cursor(document.querySelector('.main-cursor'));
-  const terminalText = new TerminalText(
-    document.querySelector('.main-console'),
-    window.kernel,
-    2
-  );
-  cursor.start();
-
-  let cursorTimeoutId = null;
-  window.addEventListener('keypress', () => {
-    cursor.stop();
-    clearTimeout(cursorTimeoutId);
-    terminalText.typeText();
-    cursorTimeoutId = setTimeout(() => {
-      cursor.start();
-    }, 500);
-  });
 }
 
 const productCursor = new Cursor(document.querySelector('.product-cursor'));
 const productTerminalText = new TerminalText(
   document.querySelector('.product-console'),
   window.kernel,
-  2,
-  0
+  productCursor
 );
 productCursor.start();
 
@@ -249,9 +246,11 @@ document.querySelector('.buy-button').addEventListener('click', () => {
     return;
   }
   productHackerOverlay.open();
+  window.removeEventListener('keypress', terminalText.keypressEventListener);
   window.addEventListener('keypress', overlayTyperKeypressEvent);
   productHackerOverlay.onCloseCallback = () => {
     window.removeEventListener('keypress', overlayTyperKeypressEvent);
+    window.addEventListener('keypress', terminalText.keypressEventListener);
   };
 
   function overlayTyperKeypressEvent(event) {
@@ -260,8 +259,9 @@ document.querySelector('.buy-button').addEventListener('click', () => {
       // Enter key
       productHackerOverlay.close();
       productIsHacked();
+    } else {
+      productTerminalText.typeText();
     }
-    productTerminalText.typeText();
   }
 });
 
