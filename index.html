@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Max Hacker</title>
-    <link rel="stylesheet" href="./styles.css?v=7" />
-    <link rel="stylesheet" href="./spinner.css?v=7" />
+    <link rel="stylesheet" href="./styles.css?v=8" />
+    <link rel="stylesheet" href="./spinner.css?v=8" />
   </head>
   <body>
     <div id="loading-program" class="alert init">
@@ -30,11 +30,14 @@
       <button class="start-button">Börja hacka</button>
     </div>
     <div id="hacker-program" class="hidden">
-      <button id="secret-button">Hemlig knapp</button>
+      <div class="secret-button-container">
+        <button id="secret-button" class="hidden">Hemlig knapp</button>
+      </div>
 
       <div class="overlay-background hidden"></div>
 
       <div>
+        Skriv din hacker-kod:<br />
         <span class="main-console"></span><span class="main-cursor">|</span>
       </div>
 
@@ -64,6 +67,7 @@
       <div id="product-console-overlay" class="overlay hidden">
         <div class="overlay-close">x</div>
         <div class="overlay-container">
+          Skriv kod för att hacka sidan:<br />
           <span class="product-console"></span
           ><span class="product-cursor">|</span>
         </div>
@@ -71,5 +75,5 @@
     </div>
   </body>
   <script src="./kernel.js"></script>
-  <script src="./main.js?v=7"></script>
+  <script src="./main.js?v=8"></script>
 </html>

@@ -36,6 +36,7 @@ class TerminalText {
     this.textElement = textElement;
     this.text = text;
     this.cursor = cursor;
+    this.cursor.start();
   }
 
   typeText() {
@@ -139,15 +140,6 @@ class Overlay {
   }
 }
 
-const hackingAlert = new Overlay(
-  document.getElementById('alert'),
-  './sounds/alarm.mp3',
-  2000,
-  () => {
-    productOverlay.open();
-  }
-);
-
 const productOverlay = new Overlay(
   document.getElementById('product-overlay'),
   './sounds/robot-transmission.mp3',
@@ -157,9 +149,18 @@ const productOverlay = new Overlay(
   1000
 );
 
+const hackingAlert = new Overlay(
+  document.getElementById('alert'),
+  './sounds/alarm.mp3',
+  2000,
+  () => {
+    productOverlay.open();
+  }
+);
+
 const productHackerOverlay = new Overlay(
   document.getElementById('product-console-overlay'),
-  null,
+  './sounds/powerup.mp3',
   null,
   null,
   './sounds/lushlife-levelup.mp3',
@@ -265,6 +266,14 @@ document.querySelector('.buy-button').addEventListener('click', () => {
   }
 });
 
+secretButtonIntervalId = setInterval(() => {
+  if (terminalText.typeCount > 300) {
+    new Audio('./sounds/lushlife-levelup.mp3').play();
+    document.getElementById('secret-button').classList.remove('hidden');
+    clearInterval(secretButtonIntervalId);
+  }
+}, 100);
+
 document.getElementById('secret-button').addEventListener('click', () => {
   hackingAlert.open();
 });
@@ -272,7 +281,7 @@ document.getElementById('secret-button').addEventListener('click', () => {
 function createGameOverOverlay(overlayText) {
   const element = document.createElement('div');
   element.classList.add('alert', 'overlay', 'game-over-overlay', 'hidden');
-  element.style.top = randomIntFromInterval(10, 500) + 'px';
+  element.style.top = randomIntFromInterval(10, 300) + 'px';
   element.style.left =
     randomIntFromInterval(10, Math.round(window.innerWidth) - 500) + 'px';
   element.innerHTML = `<div class="overlay-close">x</div>

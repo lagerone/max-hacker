@@ -19,15 +19,6 @@ body {
   font-family: sans-serif;
 }
 
-.game-over-overlay {
-  width: 500px;
-}
-
-.game-really-over-overlay {
-  background-color: red;
-  width: 700px;
-}
-
 #product-console-overlay {
   top: 100px;
   left: 30px;
@@ -101,6 +92,16 @@ body {
   text-align: center;
 }
 
+.game-over-overlay {
+  width: 500px;
+}
+
+.game-really-over-overlay {
+  background-color: red;
+  color: #333;
+  width: 700px;
+}
+
 .init {
   padding: 20px;
   background-color: transparent;
@@ -118,12 +119,16 @@ body {
   animation: blinker 1.5s linear infinite;
 }
 
+.secret-button-container {
+  height: 2rem;
+  margin-bottom: 1rem;
+}
+
 #secret-button {
   background-color: red;
   border: 1px solid #000;
   font-family: monospace;
   color: #f1f1f1;
-  margin-bottom: 1rem;
 }
 
 @keyframes blinker {
