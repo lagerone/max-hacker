@@ -1,0 +1,123 @@
+body {
+  background: #111;
+  color: #00ff00;
+  font-family: monospace;
+}
+
+.hidden {
+  display: none;
+}
+
+.overlay {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  background-color: #f1f1f1;
+  box-shadow: 0 0 45px rgba(0, 0, 0, 0.8);
+  color: #111;
+  font-family: sans-serif;
+}
+
+#product-console-overlay {
+  top: 100px;
+  left: 30px;
+  right: 100px;
+  font-family: monospace;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.overlay-close {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #333;
+  height: 25px;
+  padding: 0 5px;
+  text-align: right;
+  color: red;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 20px;
+  border-bottom: 1px solid #111;
+  cursor: pointer;
+}
+
+.overlay-container {
+  padding: 2rem;
+}
+
+.overlay-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.product-image {
+  max-width: 100%;
+  margin-bottom: 2rem;
+}
+
+.price-info {
+  font-size: 20px;
+  margin-bottom: 2rem;
+}
+
+.buy-button {
+  background-color: orange;
+  border: 1px solid orange;
+  padding: 1rem;
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  transition: all ease-in-out 1s;
+}
+
+.hacked {
+  background-color: #fff;
+  border-color: #333;
+}
+
+.alert {
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #333;
+  color: red;
+  text-align: center;
+}
+
+.init {
+  padding: 20px;
+  background-color: transparent;
+}
+
+.start-button {
+  background-color: #00ff00;
+  border: 0;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: monospace;
+}
+
+.blink {
+  animation: blinker 1.5s linear infinite;
+}
+
+#secret-button {
+  background-color: red;
+  border: 1px solid #000;
+  font-family: monospace;
+  color: #f1f1f1;
+  margin-bottom: 1rem;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

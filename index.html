@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Max Hacker</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./spinner.css" />
+  </head>
+  <body>
+    <div id="loading-program" class="alert init">
+      Laddar hacker program.<br />
+      <div class="lds-spinner">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div id="hacker-program-loaded" class="alert init hidden">
+      Hacker-programmet är laddat.<br /><br />
+      <button class="start-button">Börja hacka</button>
+    </div>
+    <div id="hacker-program" class="hidden">
+      <button id="secret-button">Hemlig knapp</button>
+
+      <div class="overlay-background hidden"></div>
+
+      <div>
+        <span class="main-console"></span><span class="main-cursor">|</span>
+      </div>
+
+      <div id="alert" class="alert overlay hidden">
+        <div class="overlay-close">x</div>
+        <div class="overlay-container">
+          <div class="blink">
+            Hackar in på sida
+          </div>
+        </div>
+      </div>
+
+      <div id="product-overlay" class="overlay hidden">
+        <div class="overlay-close">x</div>
+        <div class="overlay-container">
+          <h2>Lamborghini</h2>
+          <img
+            class="product-image"
+            src="./images/lambo.jpg"
+            alt="Black Lamborghini"
+          />
+          <div class="price-info">Pris: 3 000 000 000 kr</div>
+          <button class="buy-button">Köp</button>
+        </div>
+      </div>
+
+      <div id="product-console-overlay" class="overlay hidden">
+        <div class="overlay-close">x</div>
+        <div class="overlay-container">
+          <span class="product-console"></span
+          ><span class="product-cursor">|</span>
+        </div>
+      </div>
+
+      <div id="game-over-overlay" class="alert overlay hidden">
+        <div class="overlay-close">x</div>
+        <div class="overlay-container">
+          Du har lyckats hacka sidan! Lamborghini är köpt för 0 kr.
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./kernel.js"></script>
+  <script src="./main.js"></script>
+</html>
