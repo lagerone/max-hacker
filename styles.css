@@ -19,6 +19,10 @@ body {
   font-family: sans-serif;
 }
 
+.game-over-overlay {
+  width: 500px;
+}
+
 #product-console-overlay {
   top: 100px;
   left: 30px;

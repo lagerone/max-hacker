@@ -158,15 +158,6 @@ const productHackerOverlay = new Overlay(
   1000
 );
 
-const gameOverOverlay = new Overlay(
-  document.getElementById('game-over-overlay'),
-  './sounds/powerup.flac',
-  null,
-  null,
-  './sounds/spaceship-interface.wav',
-  1000
-);
-
 function preLoadAudioFiles(doneCallback) {
   const audioFiles = [
     './sounds/robot-transmission.ogg',
@@ -243,7 +234,7 @@ productCursor.start();
 
 document.querySelector('.buy-button').addEventListener('click', () => {
   if (document.querySelector('.buy-button').classList.contains('hacked')) {
-    gameOverOverlay.open();
+    createGameOverOverlay().open();
     return;
   }
   productHackerOverlay.open();
@@ -267,6 +258,30 @@ document.getElementById('secret-button').addEventListener('click', () => {
   hackingAlert.open();
 });
 
+function createGameOverOverlay() {
+  const element = document.createElement('div');
+  element.classList.add('alert', 'overlay', 'game-over-overlay', 'hidden');
+  element.style.top = randomIntFromInterval(10, 500) + 'px';
+  element.style.left = randomIntFromInterval(10, 300) + 'px';
+  element.innerHTML = `<div class="overlay-close">x</div>
+    <div class="overlay-container">
+      Du har lyckats hacka sidan! Lamborghini är köpt för 0 kr.
+    </div>`;
+  document.getElementById('hacker-program').appendChild(element);
+  return new Overlay(
+    element,
+    './sounds/powerup.flac',
+    null,
+    null,
+    './sounds/spaceship-interface.wav',
+    1000
+  );
+}
+
 function productIsHacked() {
   document.querySelector('.buy-button').classList.add('hacked', 'blink');
+}
+
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
