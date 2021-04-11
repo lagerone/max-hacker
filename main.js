@@ -34,30 +34,102 @@ class TerminalText {
    */
   constructor(textElement, text, cursor) {
     this.textElement = textElement;
-    this.text = text;
+    this.text = text.replace(/\t/g, '  ');
     this.cursor = cursor;
+  }
+
+  start() {
+    console.log('starting terminal');
+    window.addEventListener('keypress', this.keypressEventListener);
     this.cursor.start();
+  }
+
+  stop() {
+    console.log('stopping terminal');
+    this.cursor.stop();
+    window.removeEventListener('keypress', this.keypressEventListener);
   }
 
   typeText() {
     this.typeCount += this.typeSpeed;
     const typedText = this.text.substring(0, this.typeCount);
-    this.textElement.innerText = typedText;
+    this.textElement.innerHTML = typedText
+      .replaceAll(' ', '&nbsp;')
+      .replaceAll('\n', '<br />');
+  }
+
+  eraseText() {
+    if (this.typeCount <= 0) {
+      this.typeCount = 0;
+      return;
+    }
+    this.typeCount -= this.typeSpeed;
+    const typedText = this.text.substring(0, this.typeCount);
+    this.textElement.innerHTML = typedText
+      .replaceAll(' ', '&nbsp;')
+      .replaceAll('\n', '<br />');
   }
 
   clear() {
     this.typeCount = 0;
-    this.textElement.innerText = '';
+    this.textElement.innerHTML = '';
   }
 
-  keypressEventListener = () => {
+  keypressEventListener = (event) => {
     this.cursor.stop();
     clearTimeout(this.cursorTimeoutId);
-    this.typeText();
+    if (event.charCode === 127) {
+      this.eraseText();
+    } else {
+      this.typeText();
+    }
     this.cursorTimeoutId = setTimeout(() => {
       this.cursor.start();
     }, this.typeTimeoutMS);
   };
+}
+
+class HackerSettings {
+  /**
+   * @param {HTMLElement} settingsElement
+   * @param {TerminalText} terminal
+   */
+  constructor(settingsElement, terminal) {
+    this.settingsToggleElement = settingsElement.querySelector(
+      '.settings-toggle'
+    );
+    this.settingsListElement = settingsElement.querySelector(
+      '.hacker-settings-list'
+    );
+    this.speedInputElement = settingsElement.querySelector(
+      'input.input-type-speed'
+    );
+    this.terminal = terminal;
+
+    this.speedInputElement.value = terminal.typeSpeed;
+  }
+
+  start() {
+    this.addToggle();
+    this.trackSpeedInput();
+  }
+
+  addToggle() {
+    this.settingsToggleElement.addEventListener('click', () => {
+      this.settingsListElement.classList.toggle('hidden');
+      if (this.settingsListElement.classList.contains('hidden')) {
+        this.terminal.start();
+      } else {
+        this.terminal.stop();
+      }
+    });
+  }
+
+  trackSpeedInput() {
+    this.speedInputElement.addEventListener('change', (event) => {
+      this.terminal.typeSpeed = parseInt(event.target.value, 10);
+    });
+  }
 }
 
 class Overlay {
@@ -198,14 +270,12 @@ function preLoadAudioFiles(doneCallback) {
 }
 
 preLoadAudioFiles(() => {
-  setTimeout(() => {
-    document.getElementById('loading-program').classList.add('hidden');
-    document.getElementById('hacker-program-loaded').classList.remove('hidden');
-    document.querySelector('.start-button').addEventListener('click', () => {
-      document.getElementById('hacker-program-loaded').classList.add('hidden');
-      startProgram();
-    });
-  }, 2000);
+  document.getElementById('loading-program').classList.add('hidden');
+  document.getElementById('hacker-program-loaded').classList.remove('hidden');
+  document.querySelector('.start-button').addEventListener('click', () => {
+    document.getElementById('hacker-program-loaded').classList.add('hidden');
+    startProgram();
+  });
 });
 
 const cursor = new Cursor(document.querySelector('.main-cursor'));
@@ -214,13 +284,18 @@ const terminalText = new TerminalText(
   window.kernel,
   cursor
 );
-window.addEventListener('keypress', terminalText.keypressEventListener);
+
+terminalText.start();
 
 function startProgram() {
   document.getElementById('hacker-program').classList.remove('hidden');
   const bgAudio = new Audio('./sounds/ambient-bg.mp3');
   bgAudio.loop = true;
   bgAudio.play();
+  new HackerSettings(
+    document.getElementById('hacker-settings'),
+    terminalText
+  ).start();
 }
 
 const productCursor = new Cursor(document.querySelector('.product-cursor'));

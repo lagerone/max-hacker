@@ -131,6 +131,15 @@ body {
   color: #f1f1f1;
 }
 
+#hacker-settings {
+  margin-bottom: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #00ff00;
+}
+.settings-toggle {
+  cursor: pointer;
+}
+
 @keyframes blinker {
   50% {
     opacity: 0;

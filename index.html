@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Max Hacker</title>
-    <link rel="stylesheet" href="./styles.css?v=9" />
-    <link rel="stylesheet" href="./spinner.css?v=9" />
+    <link rel="stylesheet" href="./styles.css?v=12" />
+    <link rel="stylesheet" href="./spinner.css?v=12" />
   </head>
   <body>
     <div id="loading-program" class="alert init">
@@ -30,6 +30,12 @@
       <button class="start-button">Börja hacka</button>
     </div>
     <div id="hacker-program" class="hidden">
+      <div id="hacker-settings">
+        <div class="settings-toggle">[settings]</div>
+        <ul class="hacker-settings-list hidden">
+          <li>Hastighet: <input class="input-type-speed" type="number" /></li>
+        </ul>
+      </div>
       <div class="secret-button-container">
         <button id="secret-button" class="hidden">Hemlig knapp</button>
       </div>
@@ -44,9 +50,7 @@
       <div id="alert" class="alert overlay hidden">
         <div class="overlay-close">x</div>
         <div class="overlay-container">
-          <div class="blink">
-            Hackar in på sida
-          </div>
+          <div class="blink">Hackar in på sida</div>
         </div>
       </div>
 
@@ -75,5 +79,5 @@
     </div>
   </body>
   <script src="./kernel.js"></script>
-  <script src="./main.js?v=9"></script>
+  <script src="./main.js?v=12"></script>
 </html>
